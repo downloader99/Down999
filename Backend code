@@ -1,0 +1,17 @@
+const { exec } = require('child_process'); // To run scripts
+
+app.get('/download', (req, res) => {
+  const videoUrl = req.query.url;
+  if (!videoUrl) {
+    return res.send('Please provide a video URL.');
+  }
+
+  // Run the downloader.js script
+  exec(`node downloader.js ${videoUrl}`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return res.send('Error downloading video.');
+    }
+    res.send(`Video downloaded successfully: ${stdout}`);
+  });
+});
