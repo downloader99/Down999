@@ -1,0 +1,27 @@
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = 3000;
+
+// Serve static files like HTML, CSS, JS
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Route for the root URL (Home page)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));  // Make sure 'index.html' is in the 'public' folder
+});
+
+// Route to handle the video download
+app.get('/download', (req, res) => {
+  const videoUrl = req.query.url;
+  if (!videoUrl) {
+    return res.send('Please provide a video URL.');
+  }
+
+  // Add your video download logic here (e.g., call downloader script)
+  res.send(`Downloading video from: ${videoUrl}`);
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
