@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>xHamster Video Downloader</title>
+</head>
+<body>
+    <h2>Enter xHamster Video URL</h2>
+    <input type="text" id="videoUrl" placeholder="Paste URL here">
+    <button onclick="downloadVideo()">Get Link</button>
+    <p id="result"></p>
+
+    <script>
+        function downloadVideo() {
+            let url = document.getElementById("videoUrl").value;
+            fetch(`https://your-api-url/download?url=${encodeURIComponent(url)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.video_url) {
+                        document.getElementById("result").innerHTML = 
+                            `<a href="${data.video_url}" target="_blank">Download Video</a>`;
+                    } else {
+                        document.getElementById("result").innerText = "Error: " + data.error;
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
