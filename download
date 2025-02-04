@@ -1,0 +1,11 @@
+@app.route('/download', methods=['POST'])
+def download_video():
+    url = request.form.get('url')
+   if not url:
+        return 'No URL provided', 400    
+    try:
+        result = download_video_from_url(url)
+        return result
+    except Exception as e:
+        app.logger.error(f"Error during download: {e}")
+        return 'Internal Server Error', 500
